@@ -1,11 +1,7 @@
 [![Python application](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/python-app.yml/badge.svg)](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/python-app.yml)
-
 [![CodeQL](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/codeql-analysis.yml)
-
 [![Codacy Security Scan](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/codacy-analysis.yml)
-
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/79783b97e49646b69d75353faf117832)](https://www.codacy.com/gh/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/dashboard)
-
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/79783b97e49646b69d75353faf117832)](https://www.codacy.com/gh/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/dashboard)
 
 - [Project](#project)
@@ -18,19 +14,19 @@
     - [Quality Assurance](#quality-assurance)
   - [Troubleshooting](#troubleshooting)
 
-* * *
+---
 
 # Project
 
--   What ?
--   Why ?
--   How ?
+- What ?
+- Why ?
+- How ?
 
 ## Installation
 
 ### Prerequisites
 
--   [Python 3.9](https://www.python.org/downloads/)
+- [Python 3.9](https://www.python.org/downloads/)
 
 ### Virtual environment
 
@@ -74,7 +70,7 @@ make qa
 
 ## Troubleshooting
 
--   Fix Plotly issues with JupyterLab
+- Fix Plotly issues with JupyterLab
 
 cf. [Plotly troubleshooting](https://plotly.com/python/troubleshooting/#jupyterlab-problems)
 
@@ -82,7 +78,7 @@ cf. [Plotly troubleshooting](https://plotly.com/python/troubleshooting/#jupyterl
 jupyter labextension install jupyterlab-plotly
 ```
 
--   If using Jupyter Notebook instead of JupyterLab, uncomment the following lines in the notebook
+- If using Jupyter Notebook instead of JupyterLab, uncomment the following lines in the notebook
 
 ```python
 import plotly.io as pio
