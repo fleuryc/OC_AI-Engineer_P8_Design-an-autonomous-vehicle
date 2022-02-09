@@ -1,7 +1,12 @@
-[![Python application](https://github.com/fleuryc/Template-Python/actions/workflows/python-app.yml/badge.svg)](https://github.com/fleuryc/Template-Python/actions/workflows/python-app.yml)
-[![CodeQL](https://github.com/fleuryc/Template-Python/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/fleuryc/Template-Python/actions/workflows/codeql-analysis.yml)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b03fbc514ea44fce83fe471896566cfd)](https://www.codacy.com/gh/fleuryc/Template-Python/dashboard)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/b03fbc514ea44fce83fe471896566cfd)](https://www.codacy.com/gh/fleuryc/Template-Python/dashboard)
+[![Python application](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/python-app.yml/badge.svg)](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/python-app.yml)
+
+[![CodeQL](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/codeql-analysis.yml)
+
+[![Codacy Security Scan](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/actions/workflows/codacy-analysis.yml)
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/79783b97e49646b69d75353faf117832)](https://www.codacy.com/gh/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/dashboard)
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/79783b97e49646b69d75353faf117832)](https://www.codacy.com/gh/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/dashboard)
 
 - [Project](#project)
   - [Installation](#installation)
