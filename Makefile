@@ -64,7 +64,8 @@ requirements.txt: check-system check-venv ## Create requirements.txt file
 	pip install --upgrade pip
 	pip install --upgrade kaggle jupyterlab ipykernel ipywidgets widgetsnbextension \
 		graphviz python-dotenv requests matplotlib seaborn plotly shap numpy \
-		statsmodels pandas sklearn nltk gensim pyLDAvis spacy transformers tensorflow 
+		statsmodels pandas sklearn nltk gensim pyLDAvis spacy transformers tensorflow \
+		azureml-core azureml-dataset-runtime
 	pip freeze | grep -v "pkg_resources" > requirements.txt
 	@echo ">>> OK."
 	@echo ""
@@ -158,9 +159,9 @@ clean-pycache: ## Remove python cache files
 	@echo ""
 
 .PHONY: dataset
-dataset: ## Download and extract dataset from Kaggle
-	@echo ">>> Downloading and saving data files..."
-	python -m src.data.make-dataset -t data/raw/api/
+dataset: ## Download, extract and transfer dataset to Azure
+	@echo ">>> Downloading, extracting and transfering data files..."
+	python -m src.data.make_dataset -t data/raw -d cityscapes
 	@echo ">>> OK."
 	@echo ""
 

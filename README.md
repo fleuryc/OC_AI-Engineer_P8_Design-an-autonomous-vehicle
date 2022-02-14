@@ -4,23 +4,31 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/79783b97e49646b69d75353faf117832)](https://www.codacy.com/gh/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/dashboard)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/79783b97e49646b69d75353faf117832)](https://www.codacy.com/gh/fleuryc/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/dashboard)
 
-- [Project](#project)
+- [Future Vision Transport : Design an Autonomous Vehicle](#future-vision-transport--design-an-autonomous-vehicle)
   - [Installation](#installation)
     - [Prerequisites](#prerequisites)
     - [Virtual environment](#virtual-environment)
     - [Dependencies](#dependencies)
+    - [Environment variables](#environment-variables)
   - [Usage](#usage)
+    - [Download data](#download-data)
     - [Run Notebook](#run-notebook)
     - [Quality Assurance](#quality-assurance)
   - [Troubleshooting](#troubleshooting)
 
 ---
 
-# Project
+# Future Vision Transport : Design an Autonomous Vehicle
 
-- What ?
-- Why ?
-- How ?
+Repository of OpenClassrooms' [AI Engineer path](https://openclassrooms.com/fr/paths/188-ingenieur-ia), project #8
+
+Goal : use *Azure Machine Learning* services, *Computer Vision* techniques and *Deep Neural Network* models, to perform urban street scene images segmentation.
+
+You can see the results here :
+
+-   [Presentation](https://fleuryc.github.io/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/index.html "Presentation")
+-   [Notebook : HTML page with interactive plots](https://fleuryc.github.io/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/notebook.html "HTML page with interactive plots")
+
 
 ## Installation
 
@@ -47,7 +55,19 @@ source env/bin/activate
 make install
 ```
 
+### Environment variables
+
+- Set environment variable values in [.env](.env) file.
+
 ## Usage
+
+### Download data
+
+Download, extract and upload to Azure Cityscape zip files.
+
+````bash
+make dataset
+````
 
 ### Run Notebook
 
