@@ -6,8 +6,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Tuple
 
-import matplotlib.pyplot as plt
-
 import mlflow
 import numpy as np
 import tensorflow as tf
@@ -349,17 +347,19 @@ def main():
     dataset = Dataset.get_by_name(ws, name=dataset_name)
 
     # Get the model
-    model_name = (
-        f"unet_xception_{args.resize}{'_augmented' if args.augment  else ''}"
-    )
+    model_name = f"unet_xception_{args.resize}{'_augmented' if str(args.augment) == 'True'  else ''}"
     model_path = Path("outputs/", model_name)
 
     try:
         aml_model = Model(ws, model_name)
-        aml_model.download(target_dir=Path(model_path, 'download'))
-        model = tf.keras.models.load_model(Path(model_path, 'download', "model/data/model"))
+        aml_model.download(target_dir=Path(model_path, "download"))
+        model = tf.keras.models.load_model(
+            Path(model_path, "download", "model/data/model")
+        )
     except:
-        model = unet_xception_model(img_size, num_classes, model_name=model_name)
+        model = unet_xception_model(
+            img_size, num_classes, model_name=model_name
+        )
 
     # Configure the model for training.
     model.compile(
@@ -444,8 +444,8 @@ def main():
                     ),
                     TensorBoard(log_dir=Path(model_path, "logs")),
                 ],
-                # workers=4,
-                # use_multiprocessing=True,
+                workers=4,
+                use_multiprocessing=True,
             )
 
             # register model
