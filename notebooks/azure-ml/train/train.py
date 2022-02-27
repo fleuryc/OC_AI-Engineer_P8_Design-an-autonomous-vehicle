@@ -2,15 +2,16 @@
 @See : https://github.com/Azure/azureml-examples/blob/main/python-sdk/workflows/train/tensorflow/mnist-distributed/src/train.py
 """
 import argparse
+import random
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Tuple
 
+import albumentations as aug
 import mlflow
 import numpy as np
 import tensorflow as tf
-from azureml.core import Dataset, Run, Model
-
+from azureml.core import Dataset, Model, Run
 from tensorflow.keras import Input, Model, layers
 from tensorflow.keras.callbacks import (
     EarlyStopping,
@@ -306,6 +307,13 @@ def main():
         help="Name of the Azure ML experiment.",
     )
     parser.add_argument(
+        "--model",
+        type=str,
+        default="unet_xception",
+        choices=["unet_xception"],
+        help="Name of the model.",
+    )
+    parser.add_argument(
         "--resize",
         type=int,
         choices=[64, 80, 128, 160, 256, 320, 512, 640, 800, 1024],
@@ -314,24 +322,66 @@ def main():
     )
     parser.add_argument(
         "--augment",
-        type=bool,
-        choices=[False, True],
-        default=False,
-        help="Whether or not apply image augmentation during model training.",
+        action="store_true",
+        help="Apply image augmentation during model training.",
     )
     parser.add_argument(
-        "--model",
-        type=str,
-        default="unet_xception",
-        choices=["unet_xception"],
-        help="Name of the model.",
+        "--no-augment",
+        action="store_false",
+        help="No image augmentation during model training.",
     )
-
+    parser.set_defaults(augment=False)
     args = parser.parse_args()
 
     img_size = (args.resize, args.resize)
     num_classes = 8
     batch_size = 32
+
+    augment = None
+    if args.augment:
+        # Image augmentation : None for no augmentation
+        augment = aug.Compose(
+            [
+                # aug.OneOf(  # Weather augmentations
+                #     [
+                #         aug.RandomRain(),
+                #         aug.RandomFog(),
+                #         aug.RandomShadow(),
+                #         aug.RandomSnow(),
+                #         aug.RandomSunFlare(),
+                #     ]
+                # ),
+                aug.OneOf(  # Color augmentations
+                    [
+                        aug.RandomBrightnessContrast(),
+                        aug.RandomGamma(),
+                        aug.RandomToneCurve(),
+                    ]
+                ),
+                aug.OneOf(  # Camera augmentations
+                    [
+                        aug.MotionBlur(),
+                        aug.GaussNoise(),
+                    ]
+                ),
+                aug.OneOf(  # Geometric augmentations
+                    [
+                        aug.HorizontalFlip(),
+                        aug.RandomCrop(
+                            width=int(img_size[0] / random.uniform(1.0, 3.0)),
+                            height=int(img_size[1] / random.uniform(1.0, 3.0)),
+                        ),
+                        aug.SafeRotate(
+                            limit=15,
+                        ),
+                    ]
+                ),
+                aug.Resize(
+                    width=img_size[0],
+                    height=img_size[1],
+                ),
+            ]
+        )
 
     # connect to your workspace
     exp_run = Run.get_context()
@@ -347,14 +397,20 @@ def main():
     dataset = Dataset.get_by_name(ws, name=dataset_name)
 
     # Get the model
-    model_name = f"unet_xception_{args.resize}{'_augmented' if str(args.augment) == 'True'  else ''}"
+    model_name = (
+        f"unet_xception_{args.resize}{'_augment' if args.augment else ''}"
+    )
     model_path = Path("outputs/", model_name)
 
     try:
         aml_model = Model(ws, model_name)
         aml_model.download(target_dir=Path(model_path, "download"))
         model = tf.keras.models.load_model(
-            Path(model_path, "download", "model/data/model")
+            Path(model_path, "download", "model/data/model"),
+            custom_objects={
+                "UpdatedMeanIoU": UpdatedMeanIoU,
+                "jaccard_loss": jaccard_loss,
+            },
         )
     except:
         model = unet_xception_model(
@@ -370,7 +426,6 @@ def main():
                 name="MeanIoU", num_classes=num_classes
             ),  # https://ilmonteux.github.io/2019/05/10/segmentation-metrics.html
         ],
-        run_eagerly=True,
     )
 
     with dataset.mount("./data") as data_mount:
@@ -411,8 +466,7 @@ def main():
             Path(gtFine_path, "test").glob("**/*_gtFine_color.png")
         )
 
-        with mlflow.start_run(nested=True) as mlflow_run:
-
+        with mlflow.start_run() as mlflow_run:
             # train model
             model.fit(
                 CityscapesGenerator(
@@ -420,12 +474,14 @@ def main():
                     img_size,
                     train_input_img_paths,
                     train_label_ids_img_paths,
+                    augment,
                 ),
                 validation_data=CityscapesGenerator(
                     batch_size,
                     img_size,
                     val_input_img_paths,
                     val_label_ids_img_paths,
+                    augment,
                 ),
                 epochs=100,
                 callbacks=[
@@ -444,8 +500,9 @@ def main():
                     ),
                     TensorBoard(log_dir=Path(model_path, "logs")),
                 ],
-                workers=4,
-                use_multiprocessing=True,
+                # ! Multi-processing makes the training stop at start of epoch 2
+                # workers=4,
+                # use_multiprocessing=True,
             )
 
             # register model
