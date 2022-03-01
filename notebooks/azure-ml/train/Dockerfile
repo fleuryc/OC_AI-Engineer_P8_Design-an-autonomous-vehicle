@@ -9,7 +9,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # pip requirements
-RUN pip install --upgrade pip requests[socks] \
+RUN pip install --no-cache-dir --upgrade pip requests[socks] \
     azureml-defaults azureml-mlflow mlflow \
-    numpy matplotlib pandas albumentations \
+    numpy matplotlib pandas pyspark albumentations \
     && pip cache purge
