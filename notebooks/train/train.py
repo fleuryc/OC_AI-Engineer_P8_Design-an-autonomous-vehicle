@@ -20,7 +20,7 @@ assert tf.test.gpu_device_name()
 tf.keras.mixed_precision.set_global_policy("mixed_float16")
 
 
-# Enabl Accelerated Linear Algebra (XLA)
+# Enable Accelerated Linear Algebra (XLA)
 # see : https://www.tensorflow.org/versions/r2.7/api_docs/python/tf/config/optimizer/set_jit
 tf.config.optimizer.set_jit(True)
 
@@ -152,6 +152,18 @@ def main():
         if args.model == "unet_xception":
             model = unet_xception.get_model(
                 img_size, num_classes, model_name=model_name
+            )
+        elif args.model == "deeplab_v3plus":
+            model = deeplab_v3plus.get_model(
+                weights="cityscapes",
+                input_tensor=None,
+                input_shape=(args.resize, args.resize, 3),
+                classes=8,
+                backbone="mobilenetv2",
+                OS=16,
+                alpha=1.0,
+                activation="softmax",
+                model_name=model_name,
             )
 
     # Configure the model for training.

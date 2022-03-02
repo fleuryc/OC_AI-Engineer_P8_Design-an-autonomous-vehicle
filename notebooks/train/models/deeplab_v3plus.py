@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """ Deeplabv3+ model for Keras.
 This model is based on TF repo:
 https://github.com/tensorflow/models/tree/master/research/deeplab
@@ -15,29 +13,27 @@ https://github.com/JonathanCMitchell/mobilenet_v2_keras
     Classification, Detection and Segmentation](https://arxiv.org/abs/1801.04381)
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
-
-from tensorflow.python.keras.models import Model
-from tensorflow.python.keras import layers
-from tensorflow.python.keras.layers import Input
-from tensorflow.python.keras.layers import Reshape
-from tensorflow.python.keras.layers import Activation
-from tensorflow.python.keras.layers import Concatenate
-from tensorflow.python.keras.layers import Add
-from tensorflow.python.keras.layers import Dropout
-from tensorflow.python.keras.layers import BatchNormalization
-from tensorflow.python.keras.layers import Conv2D
-from tensorflow.python.keras.layers import DepthwiseConv2D
-from tensorflow.python.keras.layers import ZeroPadding2D
-from tensorflow.python.keras.layers import GlobalAveragePooling2D
-from tensorflow.python.keras.utils.layer_utils import get_source_inputs
-from tensorflow.python.keras.utils.data_utils import get_file
-from tensorflow.python.keras import backend as K
-from tensorflow.python.keras.applications.imagenet_utils import preprocess_input
+from tensorflow.keras import backend as K
+from tensorflow.keras import layers
+from tensorflow.keras.applications.imagenet_utils import preprocess_input
+from tensorflow.keras.layers import (
+    Activation,
+    Add,
+    BatchNormalization,
+    Concatenate,
+    Conv2D,
+    DepthwiseConv2D,
+    Dropout,
+    GlobalAveragePooling2D,
+    Input,
+    Reshape,
+    ZeroPadding2D,
+)
+from tensorflow.keras.models import Model
+from tensorflow.keras.utils import get_file, get_source_inputs
 
 WEIGHTS_PATH_X = "https://github.com/bonlime/keras-deeplab-v3-plus/releases/download/1.1/deeplabv3_xception_tf_dim_ordering_tf_kernels.h5"
 WEIGHTS_PATH_MOBILE = "https://github.com/bonlime/keras-deeplab-v3-plus/releases/download/1.1/deeplabv3_mobilenetv2_tf_dim_ordering_tf_kernels.h5"
@@ -209,7 +205,7 @@ def _make_divisible(v, divisor, min_value=None):
 def _inverted_res_block(
     inputs, expansion, stride, alpha, filters, block_id, skip_connection, rate=1
 ):
-    in_channels = inputs.shape[-1].value  # inputs._keras_shape[-1]
+    in_channels = inputs.shape[-1]  # .value  # inputs._keras_shape[-1]
     pointwise_conv_filters = int(filters * alpha)
     pointwise_filters = _make_divisible(pointwise_conv_filters, 8)
     x = inputs
@@ -278,7 +274,7 @@ def get_model(
     OS=16,
     alpha=1.0,
     activation=None,
-    model_name="deeplab_v3plus"
+    model_name="deeplab_v3plus",
 ):
     """Instantiates the Deeplabv3+ architecture
     Optionally loads weights pre-trained
@@ -715,7 +711,7 @@ def get_model(
         inputs = img_input
 
     if activation in {"softmax", "sigmoid"}:
-        x = tf.keras.layers.Activation(activation)(x)
+        x = tf.keras.layers.Activation(activation, dtype="float32")(x)
 
     model = Model(inputs, x, name=model_name)
 
