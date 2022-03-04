@@ -1,0 +1,9 @@
+channels:
+- conda-forge
+dependencies:
+- python=3.8
+- pip:
+  - azureml-defaults
+  - azureml-sdk
+  - numpy
+  - tensorflow==2.7.0

@@ -63,9 +63,8 @@ requirements.txt: check-system check-venv ## Create requirements.txt file
 	@echo ">>> Creating 'requirements.txt' file..."
 	pip install --upgrade pip
 	pip install --upgrade kaggle jupyterlab ipykernel ipywidgets widgetsnbextension \
-		graphviz python-dotenv requests matplotlib seaborn plotly shap numpy \
-		statsmodels pandas sklearn nltk gensim pyLDAvis spacy transformers tensorflow \
-		azureml-core azureml-dataset-runtime
+		graphviz python-dotenv requests matplotlib numpy statsmodels pandas sklearn tensorflow \
+		azureml-core azureml-dataset-runtime albumentations Pillow
 	pip freeze | grep -v "pkg_resources" > requirements.txt
 	@echo ">>> OK."
 	@echo ""

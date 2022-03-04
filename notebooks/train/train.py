@@ -1,4 +1,5 @@
 import argparse
+import os
 import random
 from pathlib import Path
 
@@ -8,8 +9,7 @@ import mlflow
 import tensorflow as tf
 
 import cityscapes
-from models import unet_xception, deeplab_v3plus
-
+from models import deeplab_v3plus, unet_xception
 
 # Check that GPU is available: cf. https://colab.research.google.com/notebooks/gpu.ipynb
 assert tf.test.gpu_device_name()
@@ -37,7 +37,7 @@ def main():
         "--model",
         type=str,
         default="unet_xception",
-        choices=["unet_xception"],
+        choices=["unet_xception", "deeplab_v3plus"],
         help="Name of the model.",
     )
     parser.add_argument(
@@ -197,6 +197,9 @@ def main():
         val_label_ids_img_paths = sorted(
             Path(gtFine_path, "val").glob("**/*_gtFine_labelIds.png")
         )
+        val_label_colors_img_paths = sorted(
+            Path(gtFine_path, "val").glob("**/*_color.png")
+        )
 
         with mlflow.start_run() as mlflow_run:
             # train model
@@ -225,13 +228,24 @@ def main():
                         verbose=1,
                     ),
                     tf.keras.callbacks.EarlyStopping(
-                        patience=5,
+                        patience=7,
                         restore_best_weights=True,
-                        min_delta=1e-3,
+                        min_delta=1e-2,
                         verbose=1,
                     ),
                     tf.keras.callbacks.TensorBoard(
-                        log_dir=Path(model_path, "./logs")
+                        log_dir=Path(model_path, "logs")
+                    ),
+                    tf.keras.callbacks.ModelCheckpoint(
+                        Path(model_path, "checkpoint.h5"),
+                        monitor="val_loss",
+                        save_best_only=True,
+                        verbose=1,
+                    ),
+                    cityscapes.CityscapesViewerCallback(
+                        val_input_img_paths,
+                        val_label_colors_img_paths,
+                        img_size,
                     ),
                 ],
                 # ! Multi-processing makes the training stop at start of epoch 2
