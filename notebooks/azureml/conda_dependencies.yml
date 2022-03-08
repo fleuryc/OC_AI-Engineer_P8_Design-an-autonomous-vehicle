@@ -3,7 +3,10 @@ channels:
 dependencies:
 - python=3.8
 - pip:
+  - tensorflow==2.7.0
   - azureml-defaults
   - azureml-sdk
+  - inference-schema
   - numpy
-  - tensorflow==2.7.0
+  - matplotlib
+  - Pillow
