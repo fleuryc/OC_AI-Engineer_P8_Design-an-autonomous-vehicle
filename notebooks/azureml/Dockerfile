@@ -18,5 +18,6 @@ RUN pip install --no-cache-dir --upgrade pip \
         matplotlib \
         pandas \
         pyspark \
+        opencv-python \
         albumentations \
     && pip cache purge

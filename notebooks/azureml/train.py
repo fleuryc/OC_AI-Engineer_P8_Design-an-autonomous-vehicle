@@ -3,12 +3,13 @@ import random
 from pathlib import Path
 
 import albumentations as aug
-import azureml
 import mlflow
 import tensorflow as tf
 
+import azureml
 import cityscapes
 from models import deeplab_v3plus, unet_xception
+from models.keras_segmentation.models import fcn, segnet
 
 # Check that GPU is available: cf. https://colab.research.google.com/notebooks/gpu.ipynb
 assert tf.test.gpu_device_name()
@@ -36,7 +37,7 @@ def main():
         "--model",
         type=str,
         default="unet_xception",
-        choices=["unet_xception", "deeplab_v3plus"],
+        choices=["unet_xception", "deeplab_v3plus", "fcn_8", "vgg_segnet"],
         help="Name of the model.",
     )
     parser.add_argument(
@@ -163,6 +164,20 @@ def main():
                 alpha=1.0,
                 activation="softmax",
                 model_name=model_name,
+            )
+        elif args.model == "fcn_8":
+            model = fcn.fcn_8(
+                n_classes=8,
+                input_height=args.resize,
+                input_width=args.resize,
+                channels=3,
+            )
+        elif args.model == "vgg_segnet":
+            model = segnet.vgg_segnet(
+                n_classes=8,
+                input_height=args.resize,
+                input_width=args.resize,
+                channels=3,
             )
 
     # Configure the model for training.
