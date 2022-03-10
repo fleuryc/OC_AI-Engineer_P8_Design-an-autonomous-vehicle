@@ -12,5 +12,7 @@
     "**/.ipynb_checkpoints/**": true,
     "**/.mypy_cache/**": true,
     "**/.pytest_cache/**": true
-  }
+  },
+  "appService.defaultWebAppToDeploy": "/subscriptions/da2e4791-6dd1-422b-848a-a961cef6ab89/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/ocp8-webapp",
+  "appService.deploySubpath": "webapp"
 }

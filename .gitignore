@@ -75,7 +75,8 @@ docs/_build/
 target/
 
 # DotEnv configuration
-.env
+.env*
+!.env.example
 
 # Database
 *.db

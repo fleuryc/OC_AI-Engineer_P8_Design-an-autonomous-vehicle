@@ -37,7 +37,7 @@ def main():
         "--model",
         type=str,
         default="unet_xception",
-        choices=["unet_xception", "deeplab_v3plus", "fcn_8", "vgg_segnet"],
+        choices=["unet_xception", "deeplab_v3plus", "fcn_8"],
         help="Name of the model.",
     )
     parser.add_argument(
@@ -172,13 +172,6 @@ def main():
                 input_width=args.resize,
                 channels=3,
             )
-        elif args.model == "vgg_segnet":
-            model = segnet.vgg_segnet(
-                n_classes=8,
-                input_height=args.resize,
-                input_width=args.resize,
-                channels=3,
-            )
 
     # Configure the model for training.
     model.compile(
@@ -232,7 +225,7 @@ def main():
                     val_label_ids_img_paths,
                     augment,
                 ),
-                epochs=100,
+                epochs=25,
                 callbacks=[
                     tf.keras.callbacks.ReduceLROnPlateau(
                         patience=2,
@@ -242,7 +235,7 @@ def main():
                         verbose=1,
                     ),
                     tf.keras.callbacks.EarlyStopping(
-                        patience=7,
+                        patience=5,
                         restore_best_weights=True,
                         min_delta=1e-2,
                         verbose=1,
