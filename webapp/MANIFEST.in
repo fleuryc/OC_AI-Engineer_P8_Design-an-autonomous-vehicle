@@ -1,0 +1,4 @@
+include segment/schema.sql
+graft segment/static
+graft segment/templates
+global-exclude *.pyc
