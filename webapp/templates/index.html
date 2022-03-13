@@ -1,19 +1,52 @@
 {% extends 'layout.html' %} {% block content %}
 
-<form class="row row-cols-lg-auto g-3 align-items-center">
-  <div class="col-12">
-    <label for="inputImageID" class="form-label">Image ID</label>
-    <input
-      type="text"
-      class="form-control"
-      id="inputImageID"
-      placeholder="berlin_000000_000019"
-    />
+<h1 class="mb-3">Cityscape image semantic segmentation</h1>
+<form class="form-floating" method="get">
+  <input
+    name="image_id"
+    type="text"
+    class="form-control"
+    id="inputImageID"
+    aria-describedby="imageIDHelp"
+    placeholder="frankfurt_000000_000294"
+    value="{{ image_id }}"
+  />
+  <label for="inputImageID" class="col-form-label">Image ID</label>
+  <div id="imageIDHelp" class="form-text">
+    If no image is found, one will be randomly picked.
   </div>
-
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary">Submit !</button>
-  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-{% endblock %}
+{% if original_img_b64_str is not none and labels_img_b64_str is not none and categories_img_b64_str is not none %}
+<hr />
+
+<div class="text-center">
+  <div class="row">
+    <figure class="figure col">
+      <img
+        class="img-fluid img-thumbnail cityscape-img"
+        src="data:image/png;base64,{{ original_img_b64_str }}"
+      />
+      <figcaption class="figure-caption">Original image</figcaption>
+    </figure>
+
+    <figure class="figure col">
+      <img
+        class="img-fluid img-thumbnail cityscape-img"
+        src="data:image/png;base64,{{ labels_img_b64_str }}"
+      />
+      <figcaption class="figure-caption">True labels</figcaption>
+    </figure>
+
+    <figure class="figure col">
+      <img
+        class="img-fluid img-thumbnail cityscape-img"
+        src="data:image/png;base64,{{ categories_img_b64_str }}"
+      />
+      <figcaption class="figure-caption">Predicted categories</figcaption>
+    </figure>
+  </div>
+</div>
+
+{% endif %} {% endblock %}

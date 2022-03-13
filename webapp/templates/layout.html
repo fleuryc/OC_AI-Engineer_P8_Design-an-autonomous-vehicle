@@ -1,35 +1,53 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="Clément Fleury - https://clementfleury.me" />
 
     <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/normalize.css') }}"
+      rel="canonical"
+      href="{{ url_for(request.endpoint, **request.view_args) }}"
     />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/main.css') }}"
-    />
-    <meta name="theme-color" content="#fafafa" />
 
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
     />
 
+    <style>
+      html {
+        height: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        background-color: whitesmoke;
+      }
+
+      body {
+        width: 100%;
+        min-height: 100%;
+        padding: 0 20px;
+        display: flex;
+        background-color: snow;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+      }
+
+      .content {
+        width: 100%;
+        margin: 40px auto;
+      }
+
+      .cityscape-img {
+        width: 100%;
+        aspect-ratio: 2;
+      }
+    </style>
+
     <title>Hello, world!</title>
   </head>
   <body>
-
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
-
-    <script src="{{ url_for('static', filename='js/vendor/modernizr-3.11.2.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <main class="content">{% block content %}{% endblock %}</main>
 
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   </body>
