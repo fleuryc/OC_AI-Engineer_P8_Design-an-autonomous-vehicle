@@ -1,24 +1,37 @@
 {% extends 'layout.html' %} {% block content %}
 
-<h1 class="mb-3">Cityscape image semantic segmentation</h1>
-<form class="form-floating" method="get">
-  <input
-    name="image_id"
-    type="text"
-    class="form-control"
-    id="inputImageID"
-    aria-describedby="imageIDHelp"
-    placeholder="frankfurt_000000_000294"
-    value="{{ image_id }}"
-  />
-  <label for="inputImageID" class="col-form-label">Image ID</label>
-  <div id="imageIDHelp" class="form-text">
-    If no image is found, one will be randomly picked.
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<div class="predict-form">
+  <h1 class="mb-3">Cityscape image semantic segmentation</h1>
+  <form class="form-floating" method="get">
+    <div class="row">
+      <div class="col-auto">
+        <label for="inputImageID" class="col-form-label">Image ID</label>
+      </div>
+      <div class="col-auto">
+        <input
+          name="image_id"
+          type="text"
+          class="form-control"
+          id="inputImageID"
+          aria-describedby="imageIDHelp"
+          placeholder="frankfurt_000000_000294"
+          value="{{ image_id }}"
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+    <div class="row">
+        <div id="imageIDHelp" class="form-text">
+          If no image is found, one will be randomly picked.
+        </div>
+    </div>
+  </form>
+</div>
 
-{% if original_img_b64_str is not none and labels_img_b64_str is not none and categories_img_b64_str is not none %}
+{% if original_img_b64_str is not none and labels_img_b64_str is not none and
+categories_img_b64_str is not none %}
 <hr />
 
 <div class="text-center">

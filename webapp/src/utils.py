@@ -1,45 +1,23 @@
 import base64
-import os
 from io import BytesIO
 from pathlib import Path
 
 import numpy as np
 import tensorflow as tf
-from azureml.core import Model, Workspace
-from dotenv import load_dotenv
 from PIL import Image
 
 from . import cityscapes
 
 
 def get_images(
-    model_base_path="./../results/downlad/",
-    model_name="deeplab_v3plus_64",
-    images_base_path="./../data/raw",
+    model_base_path="/home/azureml-model",
+    model_name="deeplab_v3plus_256",
+    dataset_path="/azureml-blobstore/cityscapes",
     image_id=None,
 ):
 
-    load_dotenv()
-    AZURE_SUBSCRIPTION_ID = os.getenv("AZURE_SUBSCRIPTION_ID")
-    AZURE_RESOURCE_GROUP = os.getenv("AZURE_RESOURCE_GROUP")
-    AZURE_WORKSPACE_NAME = os.getenv("AZURE_WORKSPACE_NAME")
-
-    # connect to your workspace
-    ws = Workspace(
-        subscription_id=AZURE_SUBSCRIPTION_ID,
-        resource_group=AZURE_RESOURCE_GROUP,
-        workspace_name=AZURE_WORKSPACE_NAME,
-    )
-
-    # Get the model
-    model_path = Path(model_base_path, model_name)
-    model = Model(ws, model_name)
-
-    if not Path(model_path, "model").exists():
-        model.download(target_dir=model_path)
-
     model = tf.keras.models.load_model(
-        Path(model_path, "model/data/model"),
+        Path(model_base_path, model_name, "model/data/model"),
         custom_objects={
             "UpdatedMeanIoU": cityscapes.UpdatedMeanIoU,
             "jaccard_loss": cityscapes.jaccard_loss,
@@ -49,9 +27,8 @@ def get_images(
     resize = int(model_name.replace("_augment", "").split("_")[-1])
     img_size = (resize, resize)
 
-    raw_data_path = Path(images_base_path)
-    leftImg8bit_path = Path(raw_data_path, "leftImg8bit")
-    gtFine_path = Path(raw_data_path, "gtFine")
+    leftImg8bit_path = Path(dataset_path, "leftImg8bit")
+    gtFine_path = Path(dataset_path, "gtFine")
 
     image_id = str(image_id)
     input_img_paths = []
