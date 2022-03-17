@@ -9,7 +9,7 @@ import tensorflow as tf
 import azureml
 import cityscapes
 from models import deeplab_v3plus, unet_xception
-from models.keras_segmentation.models import fcn, segnet
+from models.keras_segmentation.models import fcn
 
 # Check that GPU is available: cf. https://colab.research.google.com/notebooks/gpu.ipynb
 assert tf.test.gpu_device_name()

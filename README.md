@@ -32,8 +32,18 @@ You can see the results here :
 
 ## Goals
 
-- [x] this
-- [ ] that
+- [x] Deep neural Network models training
+  - Models : DeepLab v3+, U-Net with Xception backbone, FCN-8
+  - Loss function : Jaccard index
+  - Strategy : early stopping and learning rate reduction on plateau
+- [x] Models evaluation
+  - Metric : Mean Intersection over Union (IoU)
+  - Training time and cost
+- [x] Image augmentation techniques
+  - Use Albumentations
+  - Compare models performances
+- [x] Handle a large dataset
+  - Use a data generator
 
 ## Installation
 

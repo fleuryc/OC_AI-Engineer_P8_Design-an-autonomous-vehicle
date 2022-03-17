@@ -16,9 +16,7 @@ https://github.com/JonathanCMitchell/mobilenet_v2_keras
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
-from tensorflow.keras import backend as K
 from tensorflow.keras import layers
-from tensorflow.keras.applications.imagenet_utils import preprocess_input
 from tensorflow.keras.layers import (
     Activation,
     Add,
@@ -285,9 +283,12 @@ def get_model(
         input_tensor: optional Keras tensor (i.e. output of `layers.Input()`)
             to use as image input for the model.
         input_shape: shape of input image. format HxWxC
-            PASCAL VOC model was trained on (512,512,3) images. None is allowed as shape/width
-        classes: number of desired classes. PASCAL VOC has 21 classes, Cityscapes has 19 classes.
-            If number of classes not aligned with the weights used, last layer is initialized randomly
+            PASCAL VOC model was trained on (512,512,3) images. None is allowed
+                as shape/width
+        classes: number of desired classes. PASCAL VOC has 21 classes, Cityscapes
+            has 19 classes.
+            If number of classes not aligned with the weights used, last layer is
+                initialized randomly
         backbone: backbone to use. one of {'xception','mobilenetv2'}
         activation: optional activation to add to the top of the network.
             One of 'softmax', 'sigmoid' or None
@@ -301,7 +302,8 @@ def get_model(
                     of filters in each layer.
                 - If `alpha` = 1, default number of filters from the paper
                     are used at each layer.
-            Used only for mobilenetv2 backbone. Pretrained is only available for alpha=1.
+            Used only for mobilenetv2 backbone. Pretrained is only available for
+                alpha=1.
     # Returns
         A Keras model instance.
     # Raises
@@ -601,7 +603,6 @@ def get_model(
     # branching for Atrous Spatial Pyramid Pooling
 
     # Image Feature branch
-    shape_before = tf.shape(x)
     b4 = GlobalAveragePooling2D()(x)
     b4_shape = tf.keras.backend.int_shape(b4)
     # from (b_size, channels)->(b_size, 1, 1, channels)
@@ -746,13 +747,3 @@ def get_model(
             )
         model.load_weights(weights_path, by_name=True)
     return model
-
-
-def preprocess_input(x):
-    """Preprocesses a numpy array encoding a batch of images.
-    # Arguments
-        x: a 4D numpy array consists of RGB values within [0, 255].
-    # Returns
-        Input array scaled to [-1.,1.]
-    """
-    return preprocess_input(x, mode="tf")
