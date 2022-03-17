@@ -30,6 +30,11 @@ You can see the results here :
 -   [Notebook : HTML page with interactive plots](https://fleuryc.github.io/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/notebook.html "HTML page with interactive plots")
 
 
+## Goals
+
+- [x] this
+- [ ] that
+
 ## Installation
 
 ### Prerequisites
