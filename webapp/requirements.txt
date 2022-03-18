@@ -90,7 +90,7 @@ tensorboard-plugin-wit==1.8.1
 tensorflow==2.8.0
 tensorflow-io-gcs-filesystem==0.24.0
 termcolor==1.1.0
-tf-estimator-nightly==2.8.0.dev2021122109
+tf-estimator-nightly==2.9.0.dev2022031708
 typing-extensions==4.1.1
 urllib3==1.26.7
 websocket-client==1.3.1
