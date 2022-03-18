@@ -198,7 +198,10 @@ class UpdatedMeanIoU(tf.keras.metrics.MeanIoU):
         return super().update_state(y_true, y_pred, sample_weight)
 
 
-def jaccard_loss(y_true, y_pred, num_classes=8, smooth=100.0):
+@tf.function(jit_compile=True)
+def jaccard_loss(
+    y_true, y_pred, num_classes=tf.constant(8), smooth=tf.constant(100.0)
+):
     """
     See : https://towardsdatascience.com/image-segmentation-choosing-the-correct-metric-aa21fd5751af
     """
@@ -242,16 +245,13 @@ class CityscapesViewerCallback(tf.keras.callbacks.Callback):
         ax[1].imshow(val_colors)
 
         ax[2].title.set_text("Predicted category colors")
-        pred_colors = (
-            cityscapes_category_ids_to_category_colors(
-                np.squeeze(
-                    np.argmax(
-                        self.model.predict(np.expand_dims(val_img, 0)), axis=-1
-                    )
+        pred_colors = cityscapes_category_ids_to_category_colors(
+            np.squeeze(
+                np.argmax(
+                    self.model.predict(np.expand_dims(val_img, 0)), axis=-1
                 )
             )
         )
         ax[2].imshow(pred_colors)
 
         plt.show()
-
