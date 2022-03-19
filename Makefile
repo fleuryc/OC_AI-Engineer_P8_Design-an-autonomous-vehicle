@@ -64,9 +64,9 @@ requirements.txt: check-system check-venv ## Create requirements.txt file
 	pip install --upgrade pip
 	pip install --upgrade jupyterlab ipykernel ipywidgets widgetsnbextension \
 		graphviz python-dotenv requests mlflow \
-		azureml-core azureml-defaults azureml-sdk azureml-dataset-runtime azureml-mlflow \
+		azureml-core azureml-defaults azureml-dataset-runtime azureml-mlflow \
 		matplotlib numpy statsmodels pandas sklearn tensorflow pyspark \
-		opencv-python-headless albumentations Pillow
+		opencv-python-headless albumentations Pillow Flask
 	pip freeze | grep -v "pkg_resources" > requirements.txt
 	@echo ">>> OK."
 	@echo ""
