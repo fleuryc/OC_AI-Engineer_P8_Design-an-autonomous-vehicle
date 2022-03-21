@@ -122,7 +122,7 @@ def main():
 
         # eval model
         model.evaluate(
-            validation_data=cityscapes.CityscapesGenerator(
+            cityscapes.CityscapesGenerator(
                 batch_size,
                 img_size,
                 val_input_img_paths,
