@@ -27,7 +27,7 @@ Goal : use _Azure Machine Learning_ services, _Computer Vision_ techniques and _
 You can see the results here :
 
 - [Presentation](https://fleuryc.github.io/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/index.html "Presentation")
-- [Notebook : HTML page with interactive plots](https://fleuryc.github.io/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/notebook.html "HTML page with interactive plots")
+- [Notebook : HTML page with interactive plots](https://fleuryc.github.io/OC_AI-Engineer_P8_Design-an-autonomous-vehicle/main.html "HTML page with interactive plots")
 
 ## Goals
 
