@@ -44,6 +44,5 @@
     "env.bak{,/**}",
     "venv.bak{,/**}",
     ".vscode{,/**}"
-  ],
-  "appService.defaultWebAppToDeploy": "/subscriptions/da2e4791-6dd1-422b-848a-a961cef6ab89/resourceGroups/OC_P8/providers/Microsoft.Web/sites/ocp8-webapp"
+  ]
 }
