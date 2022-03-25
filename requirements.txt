@@ -26,7 +26,7 @@ azureml-dataprep-native==38.0.0
 azureml-dataprep-rslex==2.3.1
 azureml-dataset-runtime==1.39.0
 azureml-defaults==1.39.0
-azureml-inference-server-http==0.4.10
+azureml-inference-server-http==0.5.4
 azureml-mlflow==1.39.0.post1
 Babel==2.9.1
 backcall==0.2.0
